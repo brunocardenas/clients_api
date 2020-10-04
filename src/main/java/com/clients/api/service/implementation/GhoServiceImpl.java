@@ -20,8 +20,6 @@ public class GhoServiceImpl implements GhoService {
                 .scheme("https").host("apps.who.int")
                 .path("/gho/athena/api/GHO/WHOSIS_000001.json").query("profile={keyword}").buildAndExpand("simple");
 
-
-
         return restTemplate.getForObject(uriComponents.toUriString(), GhoLifeExpectancy.class);
     }
 }

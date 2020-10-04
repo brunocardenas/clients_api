@@ -10,23 +10,26 @@ public class NameGender {
         return id;
     }
 
-    public void setId(String id) {
+    public NameGender setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public NameGender setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getLikelyGender() {
         return likelyGender;
     }
 
-    public void setLikelyGender(String likelyGender) {
+    public NameGender setLikelyGender(String likelyGender) {
         this.likelyGender = likelyGender;
+        return this;
     }
 }

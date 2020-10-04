@@ -10,7 +10,8 @@ public class PersonalNames {
         return personalNames;
     }
 
-    public void setPersonalNames(List<NameProcedence> personalNames) {
+    public PersonalNames setPersonalNames(List<NameProcedence> personalNames) {
         this.personalNames = personalNames;
+        return this;
     }
 }

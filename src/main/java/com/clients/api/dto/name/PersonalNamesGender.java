@@ -10,7 +10,8 @@ public class PersonalNamesGender {
         return personalNames;
     }
 
-    public void setPersonalNames(List<NameGender> personalNames) {
+    public PersonalNamesGender setPersonalNames(List<NameGender> personalNames) {
         this.personalNames = personalNames;
+        return this;
     }
 }

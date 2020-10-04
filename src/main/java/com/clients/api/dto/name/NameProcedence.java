@@ -20,87 +20,98 @@ public class NameProcedence {
         return id;
     }
 
-    public void setId(String id) {
+    public NameProcedence setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public NameProcedence setName(String name) {
         this.name = name;
+        return this;
     }
 
     public Double getScore() {
         return score;
     }
 
-    public void setScore(Double score) {
+    public NameProcedence setScore(Double score) {
         this.score = score;
+        return this;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public NameProcedence setCountry(String country) {
         this.country = country;
+        return this;
     }
 
     public String getCountryAlt() {
         return countryAlt;
     }
 
-    public void setCountryAlt(String countryAlt) {
+    public NameProcedence setCountryAlt(String countryAlt) {
         this.countryAlt = countryAlt;
+        return this;
     }
 
     public String getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public NameProcedence setRegion(String region) {
         this.region = region;
+        return this;
     }
 
     public String getTopRegion() {
         return topRegion;
     }
 
-    public void setTopRegion(String topRegion) {
+    public NameProcedence setTopRegion(String topRegion) {
         this.topRegion = topRegion;
+        return this;
     }
 
     public String getSubRegion() {
         return subRegion;
     }
 
-    public void setSubRegion(String subRegion) {
+    public NameProcedence setSubRegion(String subRegion) {
         this.subRegion = subRegion;
+        return this;
     }
 
     public List<String> getCountriesTop() {
         return countriesTop;
     }
 
-    public void setCountriesTop(List<String> countriesTop) {
+    public NameProcedence setCountriesTop(List<String> countriesTop) {
         this.countriesTop = countriesTop;
+        return this;
     }
 
     public Double getProbabilityCalibrated() {
         return probabilityCalibrated;
     }
 
-    public void setProbabilityCalibrated(Double probabilityCalibrated) {
+    public NameProcedence setProbabilityCalibrated(Double probabilityCalibrated) {
         this.probabilityCalibrated = probabilityCalibrated;
+        return this;
     }
 
     public Double getProbabilityAltCalibrated() {
         return probabilityAltCalibrated;
     }
 
-    public void setProbabilityAltCalibrated(Double probabilityAltCalibrated) {
+    public NameProcedence setProbabilityAltCalibrated(Double probabilityAltCalibrated) {
         this.probabilityAltCalibrated = probabilityAltCalibrated;
+        return this;
     }
 }

@@ -54,11 +54,13 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientBO> getClientsListWithProbablyDeathDate() {
-        List<NameProcedence> nameProcedenceList = nameInfoService.getNamesProcedence(clientRepository.findAll()).getPersonalNames();
-        List<NameGender> nameGenderList = nameInfoService.getNamesGender(clientRepository.findAll()).getPersonalNames();
+        List<Client> clients = clientRepository.findAll();
+
+        List<NameProcedence> nameProcedenceList = nameInfoService.getNamesProcedence(clients).getPersonalNames();
+        List<NameGender> nameGenderList = nameInfoService.getNamesGender(clients).getPersonalNames();
         GhoLifeExpectancy ghoLifeExpectancyInfo = ghoService.getLifeExpectancyInfo();
         List<Country> countriesWithAbbreviation = countryService.getCountryName(LifeExpectanceUtils.getCountriesOfProcedence(nameProcedenceList));
 
-       return LifeExpectanceUtils.calculateProbablyDeathDates(nameProcedenceList, clientRepository.findAll(), ghoLifeExpectancyInfo, countriesWithAbbreviation, nameGenderList);
+       return LifeExpectanceUtils.calculateProbablyDeathDates(nameProcedenceList, clients, ghoLifeExpectancyInfo, countriesWithAbbreviation, nameGenderList);
     }
 }

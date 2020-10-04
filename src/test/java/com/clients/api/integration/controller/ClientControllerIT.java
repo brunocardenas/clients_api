@@ -6,6 +6,7 @@ import com.clients.api.repository.ClientRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,7 +20,6 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -57,6 +57,7 @@ public class ClientControllerIT {
         mongoDbContainer.start();
     }
 
+    @DisplayName("Client creation in a succesful scenario.")
     @Test
     public void createClientOkTest() throws Exception {
 
@@ -69,6 +70,7 @@ public class ClientControllerIT {
         assertEquals("Lionel", clientRepository.findAll().get(0).getName());
     }
 
+    @DisplayName("Client creation with invalid request parameter scenario.")
     @Test
     public void createClientWithExceptionTest() throws Exception {
 
@@ -76,9 +78,10 @@ public class ClientControllerIT {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(Mocks.getTestClients(true).get(0))))
                 .andExpect(status().isBadRequest())
-                .andExpect(result -> assertEquals("birthDate Birth date is required and should be in the format YYYY-MM-DD,surname Client surname is required,name Client name is required", result.getResolvedException().getMessage()));
+                .andExpect(result -> assertEquals("name Client name is required", result.getResolvedException().getMessage()));
     }
 
+    @DisplayName("Client kpi endpoint in a succesful scenario.")
     @Test
     public void getClientsKpiOkTest() throws Exception {
         clientRepository.saveAll(Mocks.getTestClients(false));
@@ -90,6 +93,7 @@ public class ClientControllerIT {
                 .andExpect(jsonPath("$.standardDeviation").value("13.0"));
     }
 
+    @DisplayName("Client kpi endpoint with exception related with empty database.")
     @Test
     public void getClientsKpiWithExceptionTest() throws Exception {
         mockMvc.perform(get("http://localhost:8080/api/v1/clientskpi")
@@ -98,6 +102,7 @@ public class ClientControllerIT {
                 .andExpect(result -> assertEquals("Database is empty!", result.getResolvedException().getMessage()));
     }
 
+    @DisplayName("Clients with probably death date endpoint in a succesful scenario.")
     @Test
     public void getClientsListWithProbablyDeathDateOk() throws Exception {
         clientRepository.saveAll(Mocks.getTestClients(false));
@@ -110,6 +115,7 @@ public class ClientControllerIT {
                 .andExpect(content().json("[{\"id\":\"123xyz456\",\"name\":\"Lionel\",\"surname\":\"Messi\",\"age\":33,\"birthDate\":\"1987-06-24T03:00:00.000+00:00\",\"probablyDeathDate\":\"2063-06-24T03:00:00.000+00:00\"},{\"id\":\"456xyz789\",\"name\":\"Diego\",\"surname\":\"Maradona\",\"age\":59,\"birthDate\":\"1960-10-30T03:00:00.000+00:00\",\"probablyDeathDate\":\"2040-10-30T03:00:00.000+00:00\"}]"));
     }
 
+    @DisplayName("Clients with probably death date endpoint in a bad request scenario.")
     @Test
     public void getClientsListWithProbablyDeathDateWithException() throws Exception {
         clientRepository.saveAll(Mocks.getTestClients(false));

@@ -1,12 +1,22 @@
 package com.clients.api.mock;
 
 import com.clients.api.TestUtils;
+import com.clients.api.businessobject.ClientBO;
+import com.clients.api.dto.ClientsKpi;
+import com.clients.api.dto.country.Country;
+import com.clients.api.dto.gho.GhoLifeExpectancy;
+import com.clients.api.dto.name.NameGender;
+import com.clients.api.dto.name.NameProcedence;
+import com.clients.api.dto.name.PersonalNames;
+import com.clients.api.dto.name.PersonalNamesGender;
 import com.clients.api.model.Client;
+import com.google.gson.Gson;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
+import org.testcontainers.shaded.com.google.common.reflect.TypeToken;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -68,6 +78,8 @@ public class Mocks {
 
         if (forExceptionCase) {
             Client newClient = new Client().setAge(39)
+                    .setSurname("Gonzalez")
+                    .setBirthDate(TestUtils.parseDate("1930-05-03"))
                     .setName(null);
 
             return Arrays.asList(newClient);
@@ -86,5 +98,51 @@ public class Mocks {
                 .setBirthDate(TestUtils.parseDate("1960-10-30"));
 
         return Arrays.asList(newClient1, newClient2);
+    }
+
+    public static GhoLifeExpectancy getLifeExpectancyMock() {
+        String ghoLifeExpectancyResponse = "{\"fact\":[{\"dim\":{\"YEAR\":\"2001\",\"SEX\":\"Male\",\"GHO\":\"Life expectancy at birth (years)\",\"REGION\":\"Europe\",\"COUNTRY\":\"France\",\"PUBLISHSTATE\":\"Published\"},\"Comments\":\"WHO life table method: Vital registration\",\"Value\":\"75.7\"},{\"dim\":{\"REGION\":\"Europe\",\"GHO\":\"Life expectancy at birth (years)\",\"YEAR\":\"2002\",\"SEX\":\"Male\",\"COUNTRY\":\"France\",\"PUBLISHSTATE\":\"Published\"},\"Comments\":\"WHO life table method: Vital registration\",\"Value\":\"76.0\"},{\"dim\":{\"PUBLISHSTATE\":\"Published\",\"YEAR\":\"2011\",\"GHO\":\"Life expectancy at birth (years)\",\"REGION\":\"Europe\",\"COUNTRY\":\"Spain\",\"SEX\":\"Male\"},\"Comments\":\"WHO life table method: Vital registration\",\"Value\":\"79.4\"},{\"dim\":{\"PUBLISHSTATE\":\"Published\",\"GHO\":\"Life expectancy at birth (years)\",\"COUNTRY\":\"Spain\",\"REGION\":\"Europe\",\"YEAR\":\"2012\",\"SEX\":\"Male\"},\"Comments\":\"WHO life table method: Vital registration\",\"Value\":\"79.5\"}]}";
+
+        return new Gson().fromJson(ghoLifeExpectancyResponse, GhoLifeExpectancy.class);
+    }
+
+    public static ClientsKpi getClientsKpiMock() {
+        String clientsKpi = "{\"averageAge\":68.5,\"standardDeviation\":4.2,\"status\":500}";
+
+        return new Gson().fromJson(clientsKpi, ClientsKpi.class);
+    }
+
+    public static List<ClientBO> getClientsWithDeathDateUtilsMock() {
+        String clientsBoJson = "[{\"id\":\"123xyz456\",\"name\":\"Lionel\",\"surname\":\"Messi\",\"age\":33,\"birthDate\":\"1987-06-24T03:00:00.000+00:00\",\"probablyDeathDate\":\"2063-06-24T03:00:00.000+00:00\"},{\"id\":\"456xyz789\",\"name\":\"Diego\",\"surname\":\"Maradona\",\"age\":59,\"birthDate\":\"1960-10-30T03:00:00.000+00:00\",\"probablyDeathDate\":\"2040-10-30T03:00:00.000+00:00\"}]";
+
+        return new Gson().fromJson(clientsBoJson, new TypeToken<List<ClientBO>>() {
+        }.getType());
+    }
+
+    public static NameProcedence getNameProcedenceObject() {
+        return new NameProcedence().setId("123test456")
+                .setName("Paolo")
+                .setCountry("PT")
+                .setCountryAlt("ES");
+    }
+
+    public static PersonalNames getPersonalNamesObject(NameProcedence nameProcedence) {
+        return new PersonalNames()
+                .setPersonalNames(Arrays.asList(nameProcedence));
+    }
+
+    public static NameGender getNameGenederObject() {
+        return new NameGender().setId("123test456")
+                .setName("Paolo")
+                .setLikelyGender("Male");
+    }
+
+    public static Country getCountryObject() {
+        return new Country().setName("Spain").setAlpha2Code("ES");
+    }
+
+    public static PersonalNamesGender getPersonalNamesGenderObject(NameGender nameGender) {
+        return new PersonalNamesGender()
+                .setPersonalNames(Arrays.asList(nameGender));
     }
 }

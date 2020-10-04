@@ -20,9 +20,6 @@ public class ClientUtils {
 
 
     private static double calculateAverageAge(List<Integer> clientsAges) {
-    /*        Integer agesSum = clientsAges.stream().reduce(0, Integer::sum);
-
-                return (double) agesSum / (double) clientsAges.size();*/
 
         return clientsAges.stream()
                 .mapToDouble(Number::doubleValue)

@@ -1,5 +1,8 @@
 package com.clients.api.configuration;
 
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
@@ -12,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
+@EnableCaching
 public class MongoDbValidationConfiguration {
     @Bean
     public ValidatingMongoEventListener validatingMongoEventListener() {
@@ -30,5 +34,10 @@ public class MongoDbValidationConfiguration {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
+    }
+
+    @Bean
+    public CacheManager cacheManager() {
+        return new ConcurrentMapCacheManager("lifeexpectancy", "names");
     }
 }

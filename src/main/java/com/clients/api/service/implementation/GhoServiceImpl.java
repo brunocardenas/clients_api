@@ -3,6 +3,7 @@ package com.clients.api.service.implementation;
 import com.clients.api.dto.gho.GhoLifeExpectancy;
 import com.clients.api.service.GhoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -15,6 +16,7 @@ public class GhoServiceImpl implements GhoService {
     RestTemplate restTemplate;
 
     @Override
+    @Cacheable("lifeexpectancy")
     public GhoLifeExpectancy getLifeExpectancyInfo() {
         UriComponents uriComponents = UriComponentsBuilder.newInstance()
                 .scheme("https").host("apps.who.int")

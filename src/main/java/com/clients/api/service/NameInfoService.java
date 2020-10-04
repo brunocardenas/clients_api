@@ -10,7 +10,19 @@ import java.util.List;
 @Service
 public interface NameInfoService {
 
+    /**
+     * This method allows user to obtain procedence info about
+     * the client/clients name/s.
+     * @param clients the client or clients that we want the procedence information.
+     * @return list of clients requested with procedence information.
+     */
     PersonalNames getNamesProcedence(List<Client> clients);
 
+    /**
+     * This method allows user to obtain gender info about
+     * the client/clients name/s.
+     * @param clients the client or clients that we want the gender information.
+     * @return list of clientes with gender information.
+     */
     PersonalNamesGender getNamesGender(List<Client> clients);
 }

@@ -6,6 +6,7 @@ import com.clients.api.dto.name.NameGender;
 import com.clients.api.dto.name.NameProcedence;
 import com.clients.api.dto.country.Country;
 import com.clients.api.dto.gho.GhoLifeExpectancy;
+import com.clients.api.exceptions.ApiException;
 import com.clients.api.model.Client;
 import com.clients.api.repository.ClientRepository;
 import com.clients.api.service.ClientService;
@@ -15,6 +16,7 @@ import com.clients.api.service.NameInfoService;
 import com.clients.api.util.ClientUtils;
 import com.clients.api.util.LifeExpectanceUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +43,12 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientsKpi getClientsKpi() {
+        List<Client> clientList = clientRepository.findAll();
+
+        if (clientList.isEmpty()) {
+            throw new ApiException("validation_error", "Database is empty!", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+
         return ClientUtils.buildClientsKpiResponse(clientRepository.findAll());
     }
 

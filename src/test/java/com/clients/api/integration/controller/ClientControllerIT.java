@@ -19,6 +19,7 @@ import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -58,9 +59,10 @@ public class ClientControllerIT {
 
     @Test
     public void createClientOkTest() throws Exception {
+
         mockMvc.perform(post("http://localhost:8080/api/v1/clients")
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(Mocks.getTestClients().get(0))))
+                .content(objectMapper.writeValueAsString(Mocks.getTestClients(false).get(0))))
                 .andExpect(status().isCreated());
 
         assertEquals(1, clientRepository.findAll().size());
@@ -68,8 +70,18 @@ public class ClientControllerIT {
     }
 
     @Test
+    public void createClientWithExceptionTest() throws Exception {
+
+        mockMvc.perform(post("http://localhost:8080/api/v1/clients")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(Mocks.getTestClients(true).get(0))))
+                .andExpect(status().isBadRequest())
+                .andExpect(result -> assertEquals("birthDate Birth date is required and should be in the format YYYY-MM-DD,surname Client surname is required,name Client name is required", result.getResolvedException().getMessage()));
+    }
+
+    @Test
     public void getClientsKpiOkTest() throws Exception {
-        clientRepository.saveAll(Mocks.getTestClients());
+        clientRepository.saveAll(Mocks.getTestClients(false));
 
         mockMvc.perform(get("http://localhost:8080/api/v1/clientskpi")
                 .accept(MediaType.APPLICATION_JSON))
@@ -79,15 +91,35 @@ public class ClientControllerIT {
     }
 
     @Test
-    public void getClientsListWithProbablyDeathDateOk() throws Exception {
-        clientRepository.saveAll(Mocks.getTestClients());
+    public void getClientsKpiWithExceptionTest() throws Exception {
+        mockMvc.perform(get("http://localhost:8080/api/v1/clientskpi")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(result -> assertEquals("Database is empty!", result.getResolvedException().getMessage()));
+    }
 
-        Mocks.happyPathExpectedRequests(restServiceServer);
+    @Test
+    public void getClientsListWithProbablyDeathDateOk() throws Exception {
+        clientRepository.saveAll(Mocks.getTestClients(false));
+
+        Mocks.expectedRequests(restServiceServer, false);
 
         mockMvc.perform(get("http://localhost:8080/api/v1/clientslist")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{\"id\":\"123xyz456\",\"name\":\"Lionel\",\"surname\":\"Messi\",\"age\":33,\"birthDate\":\"1987-06-24T03:00:00.000+00:00\",\"probablyDeathDate\":\"2063-06-24T03:00:00.000+00:00\"},{\"id\":\"456xyz789\",\"name\":\"Diego\",\"surname\":\"Maradona\",\"age\":59,\"birthDate\":\"1960-10-30T03:00:00.000+00:00\",\"probablyDeathDate\":\"2040-10-30T03:00:00.000+00:00\"}]"));
+    }
+
+    @Test
+    public void getClientsListWithProbablyDeathDateWithException() throws Exception {
+        clientRepository.saveAll(Mocks.getTestClients(false));
+
+        Mocks.expectedRequests(restServiceServer, true);
+
+        mockMvc.perform(get("http://localhost:8080/api/v1/clientslist")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(result -> assertEquals("400 Bad Request: [{\"status\":400,\"message\":\"Bad Request\"}]", result.getResolvedException().getMessage()));
     }
 
 

@@ -1,10 +1,12 @@
 package com.clients.api.service.implementation;
 
 import com.clients.api.dto.country.Country;
+import com.clients.api.exceptions.ApiException;
 import com.clients.api.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 

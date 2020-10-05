@@ -133,9 +133,7 @@ public class ClientControllerIT {
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
 
             TestPropertyValues values = TestPropertyValues.of(
-                    "spring.data.mongodb.host=" + mongoDbContainer.getContainerIpAddress(),
-                    "spring.data.mongodb.port=" + mongoDbContainer.getPort()
-
+                    "spring.data.mongodb.uri=mongodb://" + mongoDbContainer.getContainerIpAddress() + ":" + mongoDbContainer.getPort()
             );
             values.applyTo(configurableApplicationContext);
         }

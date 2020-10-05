@@ -33,7 +33,7 @@ public class SpringConfiguration {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.clients.api"))
                 .paths(PathSelectors.any())
                 .build();
     }

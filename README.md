@@ -11,12 +11,14 @@ This is a CRUD Rest API for Clients that also allows user to obtain certain data
 
 **In order to get more information about this Rest API endpoints, please get into the SWAGGER documentation:** 
 
-- [Swagger Documentation](http://ec2-3-137-153-137.us-east-2.compute.amazonaws.com:8080/swagger-ui.html#/)
+- [Swagger Documentation](http://ec2-13-58-248-69.us-east-2.compute.amazonaws.com:8080/swagger-ui.html#/)
+(If you can't access is because jar is down and need to be runned. I'm working in keep jar up 24/7).
 
 **Cloud deployment:**
 
 - This Rest API is deployed in a AWS instance, you can hit Rest API endpoints with the next base url:
-- http://ec2-3-137-153-137.us-east-2.compute.amazonaws.com:8080/
+- http://ec2-13-58-248-69.us-east-2.compute.amazonaws.com:8080/
+(If you can't access is because jar is down and need to be runned. I'm working in keep jar up 24/7).
 
 **Try it on Postman:**
 

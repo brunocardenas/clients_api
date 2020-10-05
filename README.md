@@ -23,6 +23,16 @@ This is a CRUD Rest API for Clients that also allows user to obtain certain data
 - [Here](https://www.getpostman.com/collections/a7d90acff3140588cb4e) you have a postman link to import 
 in order to hit these Rest API endpoints.
 
+**Running this Rest API:**
+In order to run this Rest API on your machine, you can follow next steps:
+- Generate JAR file using: **mvn clean install** command on terminal
+- Go to the path where generated jar is located and use **java -jar JAR_NAME.jar**
+- Now your application would be running on localhost-
+
+You can also use maven plugin to run this app:
+- Use command: mvn spring-boot:run on terminal.
+
+
 ## Questions
 
 * [bcardenas133@gmail.com](bcardenas133@gmail.com)

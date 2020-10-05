@@ -13,6 +13,7 @@ This is a CRUD Rest API for Clients that also allows user to obtain certain data
 
 - [Swagger Documentation](http://ec2-13-58-248-69.us-east-2.compute.amazonaws.com:8080/swagger-ui.html#/)
 (If you can't access is because jar is down and need to be runned. I'm working in keep jar up 24/7).
+You can access swagger documentation while running local through this url: http://localhost:8080/swagger-ui.html#/
 
 **Cloud deployment:**
 

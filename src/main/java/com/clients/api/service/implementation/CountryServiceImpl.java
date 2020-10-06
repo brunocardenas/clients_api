@@ -24,7 +24,6 @@ public class CountryServiceImpl implements CountryService {
     public List<Country> getCountryName(List<String> countryAlphaCodes) {
         String alphacodes = countryAlphaCodes.stream().collect(Collectors.joining(";"));
 
-        //armar todas las url con el mismo component builder.
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(COUNTRY_API_URL)
                 .queryParam("codes", alphacodes);
 

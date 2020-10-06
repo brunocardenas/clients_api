@@ -32,6 +32,7 @@ In order to run this Rest API on your machine, you can follow next steps:
 You can also use maven plugin to run this app:
 - Use command: mvn spring-boot:run on terminal.
 
+![alt text](https://ibb.co/yVWTZrW)
 
 ## Questions
 

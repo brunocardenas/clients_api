@@ -56,6 +56,10 @@ public class ClientServiceImpl implements ClientService {
     public List<ClientBO> getClientsListWithProbablyDeathDate() {
         List<Client> clients = clientRepository.findAll();
 
+        if (clients.isEmpty()) {
+            throw new ApiException("validation_error", "Database is empty!", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        }
+
         List<NameProcedence> nameProcedenceList = nameInfoService.getNamesProcedence(clients).getPersonalNames();
         List<NameGender> nameGenderList = nameInfoService.getNamesGender(clients).getPersonalNames();
         GhoLifeExpectancy ghoLifeExpectancyInfo = ghoService.getLifeExpectancyInfo();

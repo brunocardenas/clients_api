@@ -86,7 +86,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void getClientsListWithProbablyDeathDateTest() {
+    public void getClientsListWithProbablyDeathDateTest() throws ParseException {
         NameProcedence nameProcedence = Mocks.getNameProcedenceObject();
         PersonalNames personalNames = Mocks.getPersonalNamesObject(nameProcedence);
         NameGender nameGender = Mocks.getNameGenederObject();
@@ -102,6 +102,9 @@ public class ClientServiceTest {
 
         when(LifeExpectanceUtils.calculateProbablyDeathDates(any(List.class), any(List.class), any(GhoLifeExpectancy.class), any(List.class), any(List.class))).thenReturn(expectedList);
 
+        when(clientRepository.findAll()).thenReturn(Mocks.getTestClients(false));
+
+
         List<ClientBO> clients = clientService.getClientsListWithProbablyDeathDate();
 
         assertEquals(expectedList.size(), clients.size());
@@ -109,8 +112,8 @@ public class ClientServiceTest {
 
     @Test
     public void getClientsListWithProbablyDeathDateWithExceptionTest() {
-        when(nameInfoService.getNamesProcedence(any(List.class))).thenThrow(badRequestException);
+        when(clientRepository.findAll()).thenReturn(Collections.emptyList());
 
-        assertThrows(BadRequestException.class, () -> this.clientService.getClientsListWithProbablyDeathDate());
+        assertThrows(ApiException.class, () -> this.clientService.getClientsListWithProbablyDeathDate());
     }
 }
